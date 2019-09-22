@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Russo+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <title>Dad Joke Generator</title>
 </head>
 <body>
@@ -24,10 +25,11 @@
         <section class="search">
             <h2>search dad jokes by keywords</h2>
             <form>
-                <input type="text" placeholder="Try: water">
+                <label for="search" class="visuallyHidden">Enter a search keyword. Try: water</label>
+                <input type="text" id="search" placeholder="Try: water">
                 <input type="submit" value="Search">
             </form>
-            <ul class="searchResults">
+            <ul id="searchResults" class="searchResults">
             </ul>
         </section>
     </main>
