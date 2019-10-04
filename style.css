@@ -168,7 +168,7 @@ body {
 	font-size: calc(14px + (16 - 14) * (100vw - 320px) / (1440 - 320));
 	text-align: center;
 	background-color: orange;
-	height: 100vh;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
@@ -213,16 +213,16 @@ section {
 .search {
 	background: navajowhite;
 	min-height: 50vh;
-	padding: 0 10px;
+	padding: 0 3em;
 }
 
-.searchResults {
+.resultsList {
 	list-style: square inside;
 	padding-left: 0;
 	text-align: left;
 }
 
-.searchResults li {
+.resultsList li {
 	animation: fadeIn 0.5s;
 }
 

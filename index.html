@@ -21,7 +21,7 @@
     <main>
         <section class="random">
             <h2>get a random dad joke</h2>
-            <button id="randomButton">Get Joke</button>
+            <button id="fetchRandom">Get Joke</button>
             <div id="randomJoke"></div>
         </section>
         <section class="search">
@@ -29,10 +29,12 @@
             <form>
                 <label for="search" class="visuallyHidden">Enter a search keyword. Try: water</label>
                 <input type="text" id="search" placeholder="Try: water">
-                <input type="submit" value="Search">
+                <input id="submit" type="submit" value="Search">
             </form>
-            <ul id="searchResults" class="searchResults">
-            </ul>
+            <div id="results">
+                <ul id="resultsList" class="resultsList">
+                </ul>
+            </div>
         </section>
     </main>
     <footer>
