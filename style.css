@@ -197,6 +197,18 @@ section {
 .random {
 	background: lightyellow;
 }
+.fadeIn {
+	animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 100;
+	}
+}
 
 .search {
 	background: navajowhite;
@@ -204,10 +216,14 @@ section {
 	padding: 0 10px;
 }
 
-ul.searchResults {
+.searchResults {
 	list-style: square inside;
 	padding-left: 0;
 	text-align: left;
+}
+
+.searchResults li {
+	animation: fadeIn 0.5s;
 }
 
 button,
