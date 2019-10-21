@@ -2,48 +2,49 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Russo+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <title>Dad Joke Generator</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link href="https://fonts.googleapis.com/css?family=Russo+One&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="./style.css">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<title>Dad Joke Generator</title>
 </head>
 
 <body>
 
-    <header>
-        <h1>
-            &#128169 Dad joke generator&#128169
-        </h1>
-    </header>
-    <main>
-        <section class="random">
-            <h2>get a random dad joke</h2>
-            <button id="fetchRandom">Get Joke</button>
-            <div id="randomJoke"></div>
-        </section>
-        <section class="search">
-            <h2>search dad jokes by keywords</h2>
-            <form>
-                <label for="search" class="visuallyHidden">Enter a search keyword. Try: water</label>
-                <input type="text" id="search" placeholder="Try: water">
-                <input id="submit" type="submit" value="Search">
-            </form>
-            <div id="results">
-                <ul id="resultsList" class="resultsList">
-                </ul>
-            </div>
-        </section>
-    </main>
-    <footer>
-        <p>© <a class="name" href="https://norazheng.com">Nora Zheng</a>, 2019</p>
-    </footer>
+	<header>
+		<h1>
+			&#128169 Dad joke generator&#128169
+		</h1>
+	</header>
+	<main>
+		<section class="random">
+			<h2>get a random dad joke</h2>
+			<button id="fetchRandom">Get Joke</button>
+			<section class='randomJoke' id="randomJoke">
+			</section>
+		</section>
+		<section class="search">
+			<h2>search dad jokes by keywords</h2>
+			<form>
+				<label for="search" class="visuallyHidden">Enter a search keyword. Try: water</label>
+				<input type="text" id="search" placeholder="Try: water">
+				<input id="submit" type="submit" value="Search">
+			</form>
+			<section class="results" id="results">
+				<ul id="resultsList" class="resultsList">
+				</ul>
+			</section>
+		</section>
+	</main>
+	<footer>
+		<p>© <a class="name" href="https://norazheng.com">Nora Zheng</a>, 2019</p>
+	</footer>
 
-    <script src='https://code.jquery.com/jquery-3.4.0.min.js'
-        integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>
-    <script src="./script.js"></script>
+	<script src='https://code.jquery.com/jquery-3.4.0.min.js'
+		integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>
+	<script src="./script.js"></script>
 </body>
 
 </html>
