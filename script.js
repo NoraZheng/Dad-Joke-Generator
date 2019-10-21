@@ -1,26 +1,52 @@
 const app = {};
 
-app.fetchRandomJoke = () => {
-  const randomDiv = document.querySelector('#randomJoke');
-
-  fetch('https://icanhazdadjoke.com/', {
+app.fetchData = url => {
+  const response = fetch(url, {
     headers: {
       Accept: 'application/json'
     }
   })
-    .then(response => {
-      if (response.status !== 200) {
-        resList.innerHTML = fetchError;
-        return;
+    .then(res => {
+      if (res.status === 200) {
+        return res.json();
       }
-      response.json().then(data => {
-        randomDiv.innerHTML = `<p class="fadeIn">${data.joke}</p>`;
-      });
+      return null;
     })
-    .catch(() => {
-      randomDiv.innerHTML =
-        '<p class="fadeIn>Sorry! The server is down. Please try again later!</p>';
-    });
+    .catch(() => null);
+  return response;
+};
+app.fetchRandomJoke = async () => {
+  const randomDiv = document.querySelector('#randomJoke');
+  const errorMessage =
+    '<p class="fadeIn">Sorry! The server is down. Please try again later! </p>';
+  try {
+    const data = await app.fetchData('https://icanhazdadjoke.com/');
+    if (data) {
+      randomDiv.innerHTML = `<p class="fadeIn">${data.joke}</p>`;
+    } else {
+      randomDiv.innerHTML = errorMessage;
+    }
+  } catch (error) {
+    randomDiv.innerHTML = errorMessage;
+  }
+  // fetch('https://icanhazdadjoke.com/', {
+  //   headers: {
+  //     Accept: 'application/json'
+  //   }
+  // })
+  //   .then(response => {
+  //     if (response.status !== 200) {
+  //       resList.innerHTML = fetchError;
+  //       return;
+  //     }
+  //     response.json().then(data => {
+  //       randomDiv.innerHTML = `<p class="fadeIn">${data.joke}</p>`;
+  //     });
+  //   })
+  //   .catch(() => {
+  //     randomDiv.innerHTML =
+  //       '<p class="fadeIn>Sorry! The server is down. Please try again later!</p>';
+  //   });
 };
 
 app.searchJoke = event => {
