@@ -108,8 +108,11 @@ body {
   line-height: 1.5rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
-
+header {
+  padding: 1rem;
+}
 h1,
 h2,
 footer {
@@ -133,8 +136,9 @@ section {
 .random {
   background: lightyellow;
 }
+
 .randomJoke {
-  height: 4rem;
+  min-height: 2rem;
 }
 .fadeIn {
   animation: fadeIn 0.5s;
@@ -151,7 +155,7 @@ section {
 
 .search {
   background: navajowhite;
-  min-height: 50vh;
+  min-height: 49vh;
   padding: 0 3em;
 }
 

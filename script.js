@@ -1,5 +1,6 @@
 const app = {};
 
+app.url = 'https://icanhazdadjoke.com/';
 app.fetchData = url => {
   const response = fetch(url, {
     headers: {
@@ -15,41 +16,21 @@ app.fetchData = url => {
     .catch(() => null);
   return response;
 };
+
 app.fetchRandomJoke = async () => {
   const randomDiv = document.querySelector('#randomJoke');
   const errorMessage =
     '<p class="fadeIn">Sorry! The server is down. Please try again later! </p>';
+
   try {
-    const data = await app.fetchData('https://icanhazdadjoke.com/');
-    if (data) {
-      randomDiv.innerHTML = `<p class="fadeIn">${data.joke}</p>`;
-    } else {
-      randomDiv.innerHTML = errorMessage;
-    }
+    const data = await app.fetchData(app.url);
+    randomDiv.innerHTML = `<p class="fadeIn">${data.joke}</p>`;
   } catch (error) {
     randomDiv.innerHTML = errorMessage;
   }
-  // fetch('https://icanhazdadjoke.com/', {
-  //   headers: {
-  //     Accept: 'application/json'
-  //   }
-  // })
-  //   .then(response => {
-  //     if (response.status !== 200) {
-  //       resList.innerHTML = fetchError;
-  //       return;
-  //     }
-  //     response.json().then(data => {
-  //       randomDiv.innerHTML = `<p class="fadeIn">${data.joke}</p>`;
-  //     });
-  //   })
-  //   .catch(() => {
-  //     randomDiv.innerHTML =
-  //       '<p class="fadeIn>Sorry! The server is down. Please try again later!</p>';
-  //   });
 };
 
-app.searchJoke = event => {
+app.searchJoke = async event => {
   event.preventDefault();
 
   const searchTerm = document.querySelector('#search').value;
@@ -59,32 +40,23 @@ app.searchJoke = event => {
     '<li class="fadeIn error">Sorry! The server is down. ಠ_ಠ </li><li class="fadeIn error">Please try again later.</li>';
 
   const noResult =
-    '<li class="fadeIn error">Sorry! That keyword returned no result ಠ_ಠ; </li><li class="fadeIn error">Try another keyword (e.g. banana, pizza, light, guitar)</li>';
+    '<li class="fadeIn error">Sorry! That keyword returned no result ಠ_ಠ; </li><li class="fadeIn error">Please try another keyword (e.g. banana, pizza, light, guitar)</li>';
 
-  fetch(`https://icanhazdadjoke.com/search?term=${searchTerm}`, {
-    headers: { Accept: 'application/json' }
-  })
-    .then(response => {
-      if (response.status !== 200) {
-        resList.innerHTML = fetchError;
-        return;
-      }
-      response.json().then(data => {
-        if (data.results.length === 0) {
-          resList.innerHTML = noResult;
-        } else {
-          resList.innerHTML = '';
-          data.results.map(result => {
-            const joke = document.createElement('li');
-            joke.innerHTML = `${result.joke}`;
-            resList.appendChild(joke);
-          });
-        }
+  try {
+    const data = await app.fetchData(app.url + `search?term=${searchTerm}`);
+    if (data.results.length !== 0) {
+      resList.innerHTML = '';
+      data.results.map(result => {
+        const joke = document.createElement('li');
+        joke.innerHTML = `${result.joke}`;
+        resList.appendChild(joke);
       });
-    })
-    .catch(() => {
-      resList.innerHTML = fetchError;
-    });
+    } else {
+      resList.innerHTML = noResult;
+    }
+  } catch (error) {
+    resList.innerHTML = fetchError;
+  }
 };
 
 app.init = () => {
