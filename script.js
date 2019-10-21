@@ -1,15 +1,26 @@
 const app = {};
 
 app.fetchRandomJoke = () => {
-  $.ajax({
-    url: 'https://icanhazdadjoke.com/',
-    method: 'GET',
-    dataType: 'json'
-  }).then(res => {
-    document.querySelector(
-      '#randomJoke'
-    ).innerHTML = `<p class="fadeIn">${res.joke}</p>`;
-  });
+  const randomDiv = document.querySelector('#randomJoke');
+
+  fetch('https://icanhazdadjoke.com/', {
+    headers: {
+      Accept: 'application/json'
+    }
+  })
+    .then(response => {
+      if (response.status !== 200) {
+        resList.innerHTML = fetchError;
+        return;
+      }
+      response.json().then(data => {
+        randomDiv.innerHTML = `<p class="fadeIn">${data.joke}</p>`;
+      });
+    })
+    .catch(() => {
+      randomDiv.innerHTML =
+        '<p class="fadeIn>Sorry! The server is down. Please try again later!</p>';
+    });
 };
 
 app.searchJoke = event => {
@@ -19,7 +30,7 @@ app.searchJoke = event => {
   const resList = document.querySelector('#resultsList');
 
   const fetchError =
-    '<li class="fadeIn error">Sorry! The server is down. ಠ_ಠ </li><li class="fadeIn error">Try again later.</li>';
+    '<li class="fadeIn error">Sorry! The server is down. ಠ_ಠ </li><li class="fadeIn error">Please try again later.</li>';
 
   const noResult =
     '<li class="fadeIn error">Sorry! That keyword returned no result ಠ_ಠ; </li><li class="fadeIn error">Try another keyword (e.g. banana, pizza, light, guitar)</li>';
