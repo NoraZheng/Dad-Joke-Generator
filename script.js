@@ -1,57 +1,74 @@
 const app = {};
 
 app.fetchRandomJoke = () => {
-	$.ajax({
-		url: 'https://icanhazdadjoke.com/',
-		method: 'GET',
-		dataType: 'json'
-	}).then(res => {
-		document.querySelector(
-			'#randomJoke'
-		).innerHTML = `<p class="fadeIn">${res.joke}</p>`;
-	});
+  const randomDiv = document.querySelector('#randomJoke');
+
+  fetch('https://icanhazdadjoke.com/', {
+    headers: {
+      Accept: 'application/json'
+    }
+  })
+    .then(response => {
+      if (response.status !== 200) {
+        resList.innerHTML = fetchError;
+        return;
+      }
+      response.json().then(data => {
+        randomDiv.innerHTML = `<p class="fadeIn">${data.joke}</p>`;
+      });
+    })
+    .catch(() => {
+      randomDiv.innerHTML =
+        '<p class="fadeIn>Sorry! The server is down. Please try again later!</p>';
+    });
 };
 
 app.searchJoke = event => {
-	event.preventDefault();
+  event.preventDefault();
 
-	const searchTerm = document.querySelector('#search').value;
-	const resDiv = document.querySelector('#results');
-	const resList = document.querySelector('#resultsList');
+  const searchTerm = document.querySelector('#search').value;
+  const resList = document.querySelector('#resultsList');
 
-	$.ajax({
-		url: 'https://icanhazdadjoke.com/search',
-		method: 'GET',
-		dataType: 'json',
-		data: {
-			term: searchTerm
-		}
-	})
-		.then(res => {
-			if (res.results.length == 0) {
-				resDiv.innerHTML = `<p class="fadeIn">Sorry! That keyword returned no result ಠ_ಠ; </p><p class="fadeIn">Try another keyword (e.g. banana, pizza, light, guitar)</p>`;
-			} else {
-				resList.innerHTML = '';
-				res.results.map(result => {
-					const joke = document.createElement('li');
-					joke.innerHTML = `${result.joke}`;
-					resList.appendChild(joke);
-				});
-			}
-		})
-		.catch(() => {
-			resDiv.innerHTML = `<p>Sorry! The server is down. </p><p>Try again later.</p>`;
-		});
+  const fetchError =
+    '<li class="fadeIn error">Sorry! The server is down. ಠ_ಠ </li><li class="fadeIn error">Please try again later.</li>';
+
+  const noResult =
+    '<li class="fadeIn error">Sorry! That keyword returned no result ಠ_ಠ; </li><li class="fadeIn error">Try another keyword (e.g. banana, pizza, light, guitar)</li>';
+
+  fetch(`https://icanhazdadjoke.com/search?term=${searchTerm}`, {
+    headers: { Accept: 'application/json' }
+  })
+    .then(response => {
+      if (response.status !== 200) {
+        resList.innerHTML = fetchError;
+        return;
+      }
+      response.json().then(data => {
+        if (data.results.length === 0) {
+          resList.innerHTML = noResult;
+        } else {
+          resList.innerHTML = '';
+          data.results.map(result => {
+            const joke = document.createElement('li');
+            joke.innerHTML = `${result.joke}`;
+            resList.appendChild(joke);
+          });
+        }
+      });
+    })
+    .catch(() => {
+      resList.innerHTML = fetchError;
+    });
 };
 
 app.init = () => {
-	document
-		.querySelector('#fetchRandom')
-		.addEventListener('click', app.fetchRandomJoke);
+  document
+    .querySelector('#fetchRandom')
+    .addEventListener('click', app.fetchRandomJoke);
 
-	document.querySelector('#submit').addEventListener('click', app.searchJoke);
+  document.querySelector('#submit').addEventListener('click', app.searchJoke);
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-	app.init();
+  app.init();
 });
