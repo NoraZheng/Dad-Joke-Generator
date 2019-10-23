@@ -2,7 +2,7 @@ const app = {};
 
 app.url = 'https://icanhazdadjoke.com/';
 app.fetchData = url => {
-  const response = fetch(url, {
+  return fetch(url, {
     headers: {
       Accept: 'application/json'
     }
@@ -13,8 +13,10 @@ app.fetchData = url => {
       }
       return null;
     })
-    .catch(() => null);
-  return response;
+    .catch(() => {
+      console.log('Server is down!');
+      return null;
+    });
 };
 
 app.fetchRandomJoke = async () => {
